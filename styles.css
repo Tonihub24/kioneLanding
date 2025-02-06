@@ -1,0 +1,201 @@
+/* Ensure proper charset */
+@charset "UTF-8";
+
+/* Reset styles for consistency */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Global styles */
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    min-height: 100vh;
+    background-color: #0d0220;
+}
+
+/* Layout */
+.container {
+    display: flex;
+    width: 100%;
+}
+
+/* Left side content (Dashboard area) */
+.left-content {
+    -ms-flex: 1; /* for IE 10+ */
+    flex: 1;
+    padding: 20px;
+    margin-right: 100px; /* Space for the right-side nav */
+}
+
+/* Header styling */
+header {
+    background: #b203e7;
+    padding: 10px;
+    margin-bottom: 45px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+header p {
+    font-size: 18px;
+    color: #6f71fc;
+}
+
+/* Main content section */
+main {
+    margin-top: 20px;
+}
+
+main h2 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+main ul {
+    list-style: none;
+}
+
+main ul li {
+    margin-bottom: 10px;
+}
+
+main ul li a {
+    text-decoration: none;
+    color: #3533ca;
+}
+
+main ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Footer styling */
+footer {
+    margin-top: 20px;
+    font-size: 16px;
+    text-align: center;
+    color: #555;
+}
+
+/* Right Navigation (Sidebar) */
+.right-nav {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+    width: 250px;
+    background: black;
+    color: white;
+    padding: 20px;
+    z-index: 1000;
+    box-shadow: -2px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+.right-nav.active {
+    right: 0;
+}
+
+/* Navigation buttons */
+.nav-button {
+    padding: 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.nav-button:hover {
+    background: #6ad4fd;
+    border-radius: 8px;
+}
+
+.nav-button i {
+    margin-right: 10px;
+}
+
+/* Disable text selection */
+.text {
+    -ms-user-select: none; /* for IE 10+ */
+    -webkit-user-select: none; /* for Safari */
+    user-select: none;
+}
+
+/* Navbar (mobile support) */
+#nav-toggle {
+    display: none;
+}
+
+#nav-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#nav-title {
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: white;
+    text-decoration: none;
+}
+
+#nav-toggle-burger {
+    width: 30px;
+    height: 3px;
+    background-color: white;
+    position: relative;
+    transition: 0.4s;
+}
+
+#nav-toggle:checked + #nav-header #nav-toggle-burger {
+    transform: rotate(45deg);
+}
+
+/* Adjust layout when navbar is open on mobile */
+#nav-content {
+    -ms-flex-direction: column; /* for IE 10+ */
+    flex-direction: column;
+    display: flex;
+}
+
+#nav-footer {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+}
+
+#nav-footer-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background: #bbc1c7;
+    border-radius: 8px;
+}
+
+#nav-footer-titlebox a {
+    color: white;
+    text-decoration: none;
+}
+
+#nav-footer-subtitle {
+    color: white;
+    font-size: 14px;
+}
+
+#nav-footer-content {
+    padding: 10px;
+    color: white;
+    background-color: #444;
+    border-radius: 8px;
+    margin-top: 10px;
+}

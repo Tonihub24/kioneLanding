@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/64bddec9-73f4-4cea-bd94-c48542738858/resourceGroups/Brandnew/providers/Microsoft.Web/sites/MainEvent",
+    "appService.deploySubpath": "."
+}
