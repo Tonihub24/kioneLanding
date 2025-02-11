@@ -1,29 +1,85 @@
+<?php
+// Include database connection
+include '/site/wwwroot/db_connection.php'; // Ensure this path is correct
+
+// Include Application Insights
+require_once '/home/site/wwwroot/ApplicationInsights-PHP/ApplicationInsights/Telemetry_Client.php';
+
+$instrumentationKey = '0edc2e80-83c0-4db0-896d-9d021f1b0a6b'; // Replace with your Azure App Insights key
+$client = new \ApplicationInsights\Telemetry_Client();
+$client->getContext()->setInstrumentationKey($instrumentationKey);
+
+// Track a custom event
+$client->trackEvent("Page Loaded: Contact Form");
+
+// Flush telemetry data
+$client->flush();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Form</title>
-    <style>
+    <title>Dashboard</title>
+        <style>
+        /* Metal Background */
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        /* Header Styles */
-        header {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            background-color: #000;
+            --metal-tex: url(https://images.unsplash.com/photo-1501166222995-ff31c7e93cef?crop=entropy&cs=tinysrgb&fm=jpg&ixid=MnwzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NTcyMDc2NzU&ixlib=rb-1.2.1&q=80);
+            background: black;
             color: white;
-        }
-        header img {
-            height: 50px; /* Adjust size of logo as needed */
+            font-family: system-ui, sans-serif;
         }
 
-        /* Form Styles */
+        a {
+            color: skyblue;
+            font-weight: bold;
+        }
+
+        .main {
+            margin: 40px auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .metal {
+            position: relative;
+            margin: 15vh auto;
+            color: transparent;
+            font-family: impact, sans-serif;
+            font-size: 9vw;
+            letter-spacing: 0.05em;
+            background-image: var(--metal-tex);
+            background-size: cover;
+            background-clip: text;
+            -webkit-background-clip: text;
+        }
+
+        .texture,
+        .texture::after {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .texture {
+            background-image: linear-gradient(to bottom, blue, white 50%, red 65%, white);
+            background-attachment: fixed;
+            mix-blend-mode: color-dodge;
+        }
+
+        .texture::after {
+            content: '';
+            background-image: var(--metal-tex);
+            background-size: cover;
+            filter: saturate(0) brightness(0.8) contrast(4);
+            mix-blend-mode: multiply;
+        }
+
+        /* Form Styling */
         .form-container {
             display: none;
             max-width: 300px;
@@ -44,7 +100,6 @@
         .form-container button {
             width: 100%;
             padding: 10px;
-            margin-top: 10px;
             background-color: #007BFF;
             color: white;
             border: none;
@@ -55,59 +110,69 @@
             width: 100px;
             margin: 20px auto;
             padding: 10px;
-            text-align: center;
-            cursor: pointer;
             background-color: #007BFF;
             color: white;
             border: none;
             border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <!-- Header with Logo Centered -->
-    <header>
-        <img src="images/logo.png" alt="Logo"> <!-- Replace with your logo path -->
-    </header>
 
-    <!-- Main Content -->
+    <!-- HEADER WITH METAL TEXT EFFECT -->
+    <div class="main">
+        
+        <h1 class="metal">
+            TheRuntimeShop.com
+            <span class="texture"></span>   
+        </h1>
+        
+            </div>
+
+    <!-- Login and Signup Forms -->
     <main>
+        <?php if (isset($_GET['error'])): ?>
+            <p style="color: red; text-align: center;"><?php echo htmlspecialchars($_GET['error']); ?></p>
+        <?php endif; ?>
+
+        <!-- Login -->
         <button class="toggle-btn" onclick="toggleForm('login-form')">Login</button>
         <div id="login-form" class="form-container">
             <h3>Login</h3>
-            <form action="includes/login.inc.php" method="post">
+            <form action="/login.inc.php" method="post">
                 <label for="login-username">Username</label>
-                <input type="text" id="login-username" name="username" placeholder="Username" required>
+                <input type="text" id="login-username" name="username" required>
                 <label for="login-password">Password</label>
-                <input type="password" id="login-password" name="pwd" placeholder="Password" required>
-                <button type="submit" name="login-submit">Login</button>
+                <input type="password" id="login-password" name="pwd" required>
+                <button type="submit">Login</button>
             </form>
         </div>
 
+        <!-- Signup -->
         <button class="toggle-btn" onclick="toggleForm('signup-form')">Signup</button>
         <div id="signup-form" class="form-container">
             <h3>Signup</h3>
-            <form action="includes/signup.inc.php" method="post">
+            <form action="/signup.inc.php" method="post">
                 <label for="signup-username">Username</label>
-                <input type="text" id="signup-username" name="username" placeholder="Username" required>
+                <input type="text" id="signup-username" name="username" required>
                 <label for="signup-password">Password</label>
-                <input type="password" id="signup-password" name="pwd" placeholder="Password" required>
-                <label for="signup-email">E-Mail</label>
-                <input type="email" id="signup-email" name="email" placeholder="E-Mail" required>
-                <button type="submit" name="signup-submit">Signup</button>
+                <input type="password" id="signup-password" name="pwd" required>
+                <label for="signup-email">Email</label>
+                <input type="email" id="signup-email" name="email" required>
+                <button type="submit">Signup</button>
             </form>
         </div>
     </main>
 
     <script>
         function toggleForm(formId) {
-            var form = document.getElementById(formId);
-            if (form.style.display === "none" || form.style.display === "") {
-                form.style.display = "block";
-            } else {
-                form.style.display = "none";
-            }
+            const form = document.getElementById(formId);
+            form.style.display = form.style.display === "block" ? "none" : "block";
         }
     </script>
 </body>
 </html>
+
+?>
